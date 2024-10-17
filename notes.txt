@@ -1,0 +1,124 @@
+create backend and front end folders
+open backend folder in VS COde
+
+MONGO DB PART
+
+Login to mongo DB atlas
+create a cluster
+connect to Cluster using Compass or VS COde
+Check the connectivity with CRUD operations
+
+mongodb+srv://tkrec:xLWhVmBfgcsG1GSH@tkrec.o2xyi.mongodb.net/
+
+
+pass    xLWhVmBfgcsG1GSH
+id      tkrec
+
+
+express js
+
+create backend folder
+use commands
+
+npm init
+npm install express
+
+create index.js file
+ write hello world get method
+
+ const express = require('express')
+const app = express()
+const port = 3000
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
+
+
+run using commands
+
+node index.js
+
+install nodemon :
+
+nodemon is a tool that helps develop Node.js based applications
+by automatically restarting the node application when file changes in the directory 
+are detected.
+command : npm install -g nodemon
+
+run project using nodemon
+nodemon index.js
+
+install postman seperately or VS code extension
+
+test post method in postman
+
+app.post("/apidata", (req, res) => {
+  res.send("api data is empty");
+});
+
+npm install mongodb
+npm install mongoose
+
+Create a Model file Student.js in seperate folder called models
+models/Student.js
+const mongoose = require("mongoose");
+
+const userSchema = new mongoose.Schema({
+  stdname: String,
+  stdemail: String,
+  stdage: Number,
+});
+
+const Student = mongoose.model("Student", userSchema);
+module.exports = Student;
+
+
+connect to mongoose library and add mongo atlas connection:
+
+code :
+
+import:
+
+const mongoose = require("mongoose");
+
+add code 
+
+mongoose
+  .connect("mongodb+srv://tkrec:xLWhVmBfgcsG1GSH@tkrec.o2xyi.mongodb.net/")
+  .then(() => console.log(" mongo atlas Connected!"));
+
+Create a post method in index.js
+
+import 
+
+app.use(express.json());
+const StudentModel = require("./models/Student.js");
+
+
+code :
+
+app.post("/poststudentdata", async (req, res) => {
+  try {
+    const newData = new StudentModel(req.body);
+    await newData.save();
+    res.status(201).json(newData);
+  } catch (err) {
+    console.error("Error creating new data:", err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+check the output in Postman using this json format
+
+{
+    "stdname":"varshini",
+    "stdemail":"v@gmail",
+    "stdage":20
+
+}
